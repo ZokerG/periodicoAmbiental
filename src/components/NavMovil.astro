@@ -1,0 +1,80 @@
+---
+import { FICHAS } from './fichas';
+const items = [...FICHAS, { ficha: 'S2', nombre: '¿Mi PC tiene segunda vida?', id: 'herramienta' }];
+---
+<nav class="nav-movil" aria-label="Secciones del periódico" data-nav-movil>
+  <a class="marca" href="#portada">SV<span>D</span></a>
+  <ul>
+    {items.map(i => (
+      <li><a href={`#${i.id}`} title={i.nombre}>{i.ficha}<span class="sr-only"> {i.nombre}</span></a></li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav-movil]');
+  const portada = document.getElementById('portada');
+  if (nav && portada && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => nav.classList.toggle('visible', !e.isIntersecting), {
+      rootMargin: '-40% 0px 0px 0px',
+    }).observe(portada);
+  } else if (nav) {
+    nav.classList.add('visible');
+  }
+</script>
+
+<style>
+  .nav-movil {
+    display: none;
+  }
+  @media (max-width: 1023px) {
+    .nav-movil {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      height: 52px;
+      padding: 0 12px;
+      background: var(--verde);
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+      transform: translateY(-110%);
+      transition: transform 0.25s ease;
+    }
+    .nav-movil.visible { transform: none; }
+  }
+  .marca {
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: #fff;
+    text-decoration: none;
+    flex: none;
+  }
+  .marca span { color: var(--cobre-claro); }
+  ul {
+    display: flex;
+    gap: 6px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  ul::-webkit-scrollbar { display: none; }
+  li a {
+    display: block;
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    font-size: 1.05rem;
+    line-height: 1;
+    padding: 7px 9px;
+    color: #fff;
+    background: linear-gradient(135deg, #c8894b, #b87a40);
+    text-decoration: none;
+    border-radius: 2px;
+  }
+</style>

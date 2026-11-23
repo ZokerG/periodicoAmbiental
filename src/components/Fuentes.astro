@@ -1,0 +1,77 @@
+---
+import CabeceraSeccion from './CabeceraSeccion.astro';
+const normativa = [
+  'Parlamento Europeo y Consejo (2024). Directiva (UE) 2024/1799 sobre normas comunes para promover la reparación de bienes. DOUE.',
+  'Comisión Europea (2023). Reglamento (UE) 2023/1670, requisitos de diseño ecológico para teléfonos inteligentes y tabletas. DOUE.',
+  'Parlamento Europeo y Consejo (2024). Reglamento (UE) 2024/1781 sobre diseño ecológico de productos sostenibles (ESPR). DOUE.',
+  'Parlamento Europeo (23 abr. 2024). Right to repair: making repair easier and more appealing to consumers. europarl.europa.eu.',
+  'Congreso de Colombia (2013). Ley 1672 de 2013. SUIN-Juriscol. · Presidencia (2018). Decreto 284 de 2018.',
+  'Minambiente. Residuos de aparatos eléctricos y electrónicos – RAEE. minambiente.gov.co.',
+  'Congreso Visible – Uniandes (2026). P. L. 223/2024S – 533/2026C, prevención de la obsolescencia programada (archivado).',
+  'Revista de Derecho UCSC (2022). El derecho a reparar: obsolescencia, regulación y su impacto en los desechos tecnológicos. SciELO Chile.',
+  'Valderrama, Díaz y Vargas (2018). Análisis de la generación de RAEE: estudio de caso en Neiva. Revista de Investigación Agraria y Ambiental, UNAD.',
+];
+const datos = [
+  'UNITAR / UIT (2024). The Global E-waste Monitor 2024. ewastemonitor.info.',
+  'AIE (2025). Energy and AI. iea.org.',
+  'CAM (14 nov. 2023; 11 jun. 2025). Notas de prensa sobre la Opitatón y los RAEE en el Huila. cam.gov.co.',
+  'Microsoft Learn (2025). Windows 11 requirements. · Microsoft (2024). Copilot+ PCs.',
+  'The Register (2 oct. 2025). Millions still on Windows 10 with days of support left (datos StatCounter).',
+  "PIRG (2025). Can you upgrade to Windows 11? Millions can't. · PIRG Education Fund (2023). Chromebook Churn.",
+  'Google (sep. 2023). 10 años de actualizaciones automáticas para Chromebooks.',
+  'El Tiempo (14 oct. 2025). HP: en Colombia, hasta 4 millones de computadores deberán renovarse tras el fin de Windows 10.',
+  'Apple (sep. 2024). iPhone 16 Product Environmental Report. apple.com/environment.',
+  'DGCCRF (2020), AGCM (2018) y CBS News (2024): sanciones por el caso «Batterygate».',
+  '9to5Mac (2025), Billboard e iFixit (2024), The Register (2016): iOS 26, Car Thing y Revolv.',
+];
+---
+<section id="fuentes" class="seccion fuentes">
+  <div class="contenedor">
+    <CabeceraSeccion titulo="Fuentes" ante="Cada cifra, con su origen" />
+    <div class="cols">
+      <div>
+        <h3>Normativa y fuentes académicas</h3>
+        <ul>{normativa.map(f => <li>{f}</li>)}</ul>
+      </div>
+      <div>
+        <h3>Datos, informes y casos</h3>
+        <ul>{datos.map(f => <li>{f}</li>)}</ul>
+      </div>
+    </div>
+    <p class="colofon">Segunda Vida Digital · Edición N.º 01 · Universidad Surcolombiana, Neiva</p>
+  </div>
+</section>
+
+<style>
+  .fuentes { padding-bottom: 48px; }
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  h3 {
+    font-weight: 700;
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+  }
+  ul {
+    margin: 0;
+    padding-left: 1.1em;
+    font-size: 0.92rem;
+    line-height: 1.45;
+  }
+  li { margin-bottom: 0.6em; overflow-wrap: anywhere; }
+  .colofon {
+    margin-top: 40px;
+    padding-top: 14px;
+    border-top: 4px solid var(--verde);
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--verde);
+    font-size: 1rem;
+  }
+  @media (max-width: 767px) {
+    .cols { grid-template-columns: 1fr; }
+  }
+</style>

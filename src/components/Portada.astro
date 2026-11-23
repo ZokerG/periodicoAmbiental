@@ -1,0 +1,249 @@
+---
+import QR from './QR.astro';
+import { FICHAS } from './fichas';
+---
+<section id="portada" class="portada">
+  <svg class="circuito" viewBox="0 0 1000 1400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="none" stroke="#b87a40" stroke-width="3" opacity="0.38">
+      <path d="M440 0 V40 L560 160 H860 L1000 300" />
+      <path d="M0 330 H180 L330 180 H520" />
+      <path d="M700 0 L560 140" />
+      <path d="M1000 120 L880 240 V520 L960 600" />
+      <path d="M0 640 H260 L380 520 H620 L700 600" />
+      <path d="M60 1000 L180 880 H420 L520 980 V1180" />
+      <path d="M1000 760 L820 940 H600" />
+      <path d="M0 1240 H300 L420 1120 H700 L880 1300 V1400" />
+      <path d="M720 520 L860 380 H1000" />
+      <path d="M150 0 V120 L250 220" />
+    </g>
+    <g fill="#1b3d2c" stroke="#b87a40" stroke-width="3" opacity="0.6">
+      <circle cx="520" cy="180" r="9" /><circle cx="560" cy="140" r="9" /><circle cx="960" cy="600" r="9" />
+      <circle cx="700" cy="600" r="9" /><circle cx="520" cy="1180" r="9" /><circle cx="600" cy="940" r="9" />
+      <circle cx="250" cy="220" r="9" /><circle cx="440" cy="0" r="9" /><circle cx="720" cy="520" r="9" />
+      <circle cx="60" cy="1000" r="9" />
+    </g>
+  </svg>
+
+  <div class="contenedor interior">
+    <div class="fila-sup">
+      <span>Periódico ecológico de Ingeniería de Software</span>
+      <span>Universidad Surcolombiana, Neiva</span>
+    </div>
+
+    <h1 class="nombre">
+      <span class="n1">SEGUNDA VIDA</span>
+      <span class="n2">DIGITAL</span>
+    </h1>
+
+    <div class="lema-fila">
+      <p class="lema">«El hardware no muere, lo jubila el código.»</p>
+      <span class="edicion">Edición N.º 01</span>
+    </div>
+
+    <h2 class="titular">Ni roto ni viejo: millones de computadores fueron jubilados por una lista de requisitos</h2>
+    <p class="bajada">
+      El fin del soporte de Windows 10 dejó sin actualizaciones a equipos que todavía funcionan. Contamos qué pasó,
+      cuánto cuesta en residuos y qué podemos hacer desde el software.
+    </p>
+
+    <div class="cifra">
+      <span class="numero">400 M</span>
+      <div>
+        <p class="cifra-texto">Hasta 400 millones de computadores funcionales no podían actualizarse a Windows 11.</p>
+        <p class="cifra-fuente">Fuente: PIRG (2025), «Can you upgrade to Windows 11? Millions can't».</p>
+      </div>
+    </div>
+
+    <article class="adelanto">
+      <div>
+        <p class="etiqueta-cobre">Noticia de impacto, en el suplemento</p>
+        <h3>Proyecto Segunda Vida: los PC que Windows jubiló irán a colegios de Neiva</h3>
+        <p>
+          Estudiantes de la USCO proponen reacondicionar con Linux los equipos que no pasan a Windows 11. Escanee el
+          código y pruebe si su computador tiene segunda vida.
+        </p>
+        <a class="boton" href="#herramienta">Probar la herramienta →</a>
+      </div>
+      <QR tamano={104} />
+    </article>
+
+    <nav class="fichas" aria-label="Contenido de esta edición">
+      {FICHAS.map(f => (
+        <a href={`#${f.id}`}>
+          <strong>{f.ficha}</strong>
+          <span>{f.nombre}</span>
+        </a>
+      ))}
+    </nav>
+  </div>
+</section>
+
+<style>
+  .portada {
+    position: relative;
+    background: var(--verde);
+    color: #fff;
+    overflow: hidden;
+    padding: 44px 0 48px;
+  }
+  .circuito {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+  }
+  .interior { position: relative; }
+
+  .fila-sup {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    font-size: 0.9rem;
+    color: #dfe7e1;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(255 255 255 / 0.25);
+  }
+
+  .nombre {
+    margin: 14px 0 0;
+    font-weight: 900;
+    line-height: 0.82;
+    letter-spacing: -0.01em;
+    font-size: clamp(4.2rem, 17vw, 10.5rem);
+  }
+  .n1 { display: block; color: #fff; }
+  .n2 { display: block; color: var(--cobre-claro); }
+
+  .lema-fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    flex-wrap: wrap;
+    margin: 26px 0 34px;
+  }
+  .lema {
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.6vw, 1.4rem);
+    margin: 0;
+  }
+  .edicion {
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    font-size: 1.5rem;
+    border: 2px solid #fff;
+    padding: 6px 16px;
+    position: relative;
+    margin: 0 10px;
+  }
+  .edicion::before,
+  .edicion::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    width: 4px;
+    background: repeating-linear-gradient(to bottom, var(--cobre-claro) 0 4px, transparent 4px 8px);
+  }
+  .edicion::before { left: -12px; }
+  .edicion::after { right: -12px; }
+
+  .titular {
+    font-family: var(--f-texto);
+    font-weight: 700;
+    color: #fff;
+    font-size: clamp(1.8rem, 4.6vw, 2.75rem);
+    line-height: 1.12;
+    max-width: 30ch;
+    letter-spacing: 0;
+  }
+  .bajada {
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    color: #e6ede8;
+    max-width: 62ch;
+    margin: 18px 0 30px;
+  }
+
+  .cifra {
+    display: flex;
+    align-items: center;
+    gap: 8px 28px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  .numero {
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    font-size: clamp(5.5rem, 20vw, 9.5rem);
+    line-height: 0.85;
+    color: var(--cobre-claro);
+  }
+  .cifra > div { flex: 1 1 260px; }
+  .cifra-texto {
+    font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+    line-height: 1.35;
+    margin: 0 0 8px;
+  }
+  .cifra-fuente {
+    font-style: italic;
+    font-size: 0.8rem;
+    color: #c9d5cd;
+    margin: 0;
+  }
+
+  .adelanto {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: #fff;
+    color: var(--tinta);
+    border-left: 8px solid var(--cobre);
+    padding: 22px 24px;
+  }
+  .adelanto h3 {
+    font-weight: 800;
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+    line-height: 0.98;
+    margin: 4px 0 10px;
+  }
+  .adelanto p:not(.etiqueta-cobre) { font-size: 1rem; margin-bottom: 14px; }
+  @media (max-width: 600px) {
+    .adelanto { flex-direction: column; align-items: flex-start; padding: 18px 16px; }
+  }
+
+  .fichas {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+    margin-top: 40px;
+  }
+  .fichas a {
+    display: block;
+    background: linear-gradient(135deg, #cf9254, #b87a40);
+    color: #1d2420;
+    text-decoration: none;
+    padding: 8px 8px 10px;
+    min-height: 74px;
+    transition: transform 0.15s, filter 0.15s;
+  }
+  .fichas a:hover { transform: translateY(-3px); filter: brightness(1.08); }
+  .fichas strong {
+    display: block;
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    font-size: 1.7rem;
+    line-height: 1;
+    color: #fff;
+  }
+  .fichas span {
+    display: block;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    margin-top: 4px;
+  }
+  @media (max-width: 860px) {
+    .fichas { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>

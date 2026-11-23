@@ -1,0 +1,187 @@
+---
+import CabeceraSeccion from './CabeceraSeccion.astro';
+
+type Tono = 'verde' | 'cobre' | 'gris';
+const TONO: Record<string, Tono> = {
+  UE: 'verde', Fix: 'verde', Francia: 'verde',
+  Colombia: 'cobre', 'Sanción': 'cobre',
+  'Breaking change': 'gris', Deprecated: 'gris', Shutdown: 'gris',
+};
+const hitos = [
+  ['31 jul. 2026', 'UE', 'Los países deben aplicar la Directiva (UE) 2024/1799 sobre el derecho a reparar.'],
+  ['2026', 'Colombia', 'Se archiva el proyecto de ley 223/2024S contra la obsolescencia programada.'],
+  ['14 oct. 2025', 'Breaking change', 'Termina el soporte gratuito de Windows 10.'],
+  ['Sep. 2025', 'Deprecated', 'iOS 26 deja por fuera al iPhone XS y al XR.'],
+  ['20 jun. 2025', 'UE', 'Entra en vigor el ecodiseño de celulares y tabletas: 5 años de actualizaciones y repuestos por 7 años.'],
+  ['Dic. 2024', 'Shutdown', 'Spotify desactiva el Car Thing, dos años después de venderlo.'],
+  ['Abr. 2024', 'UE', 'El Parlamento Europeo aprueba el derecho a reparar (584 votos a favor, 3 en contra).'],
+  ['Sep. 2023', 'Fix', 'Google amplía a 10 años las actualizaciones de los Chromebooks.'],
+  ['2021', 'Francia', 'Índice de reparabilidad obligatorio en electrónicos.'],
+  ['2020', 'Sanción', 'Francia multa a Apple con 25 M€ por el «batterygate».'],
+  ['2016', 'Shutdown', 'Google/Nest apaga el hub Revolv y lo deja inservible.'],
+  ['2015', 'Francia', 'La obsolescencia programada se tipifica como delito (Ley 2015-992).'],
+  ['2013', 'Colombia', 'Ley 1672: quien vende aparatos eléctricos y electrónicos debe recogerlos al final de su vida útil.'],
+] as const;
+---
+<section id="secciones" class="seccion">
+  <div class="contenedor">
+    <CabeceraSeccion ficha="J6" titulo="Changelog del planeta" ante="Sección llamativa 1" />
+    <p class="intro">
+      Hitos de la obsolescencia programada y el derecho a reparar, con el más reciente arriba, como el historial de
+      versiones de un software.
+    </p>
+    <ol class="changelog">
+      {hitos.map(([fecha, tag, texto]) => (
+        <li>
+          <span class="fecha">{fecha}</span>
+          <p><span class={`tag tag--${TONO[tag]}`}>{tag}</span> {texto}</p>
+        </li>
+      ))}
+    </ol>
+    <p class="pie-fuente">
+      Fuentes: DOUE (Directiva 2024/1799, Reglamento 2023/1670); Congreso Visible – Uniandes; Microsoft Learn; 9to5Mac;
+      Billboard / iFixit; Parlamento Europeo; Google; DGCCRF; The Register; SUIN-Juriscol.
+    </p>
+
+    <div class="separa"></div>
+
+    <CabeceraSeccion ficha="J6" titulo="La cifra del día" ante="Sección llamativa 2" />
+    <div class="cifra">
+      <div class="cifra-grande">
+        <span class="numero">133 t</span>
+        <p>de residuos eléctricos y electrónicos (RAEE) genera <strong>Neiva</strong> al año.</p>
+      </div>
+      <div class="barras" role="img" aria-label="Neiva genera 133 toneladas de RAEE al año; la mayor campaña recoge 50 toneladas.">
+        <div class="barra">
+          <p>Neiva genera al año <small>(estudio, datos de 2013)</small></p>
+          <div class="pista"><span class="relleno relleno--verde" style="--v:100%"></span><b>133 t</b></div>
+        </div>
+        <div class="barra">
+          <p>La mayor campaña recoge <small>(Opitatón CAM, Neiva 2023)</small></p>
+          <div class="pista"><span class="relleno relleno--cobre" style="--v:37.6%"></span><b class="cobre">50 t</b></div>
+        </div>
+      </div>
+    </div>
+    <p class="lectura">
+      Aun la mayor jornada de recolección del Huila recoge menos de la mitad de lo que la ciudad genera en un año. Y en el
+      estudio local, solo el 25 % de quienes generaban RAEE sabía que son residuos peligrosos.
+    </p>
+    <p class="pie-fuente">
+      Las cifras son de años distintos (2013 y 2023) y se comparan como orden de magnitud. Fuentes: Valderrama, Díaz y
+      Vargas (2018), Revista de Investigación Agraria y Ambiental, UNAD; CAM (14 nov. 2023).
+    </p>
+  </div>
+</section>
+
+<style>
+  .intro {
+    font-style: italic;
+    color: var(--gris);
+    font-size: 0.95rem;
+  }
+  .changelog {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 4px solid var(--verde);
+  }
+  .changelog li {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 4px 16px;
+    align-items: baseline;
+    padding: 10px 0 10px 14px;
+    border-bottom: 1px solid var(--linea);
+  }
+  .changelog li:first-child {
+    border-left: 6px solid var(--cobre);
+    margin-left: -4px;
+    padding-left: 12px;
+  }
+  .fecha {
+    font-family: var(--f-titulo);
+    font-weight: 700;
+    color: var(--verde);
+    font-size: 1.35rem;
+    line-height: 1.1;
+  }
+  .changelog p { margin: 0; font-size: 1rem; line-height: 1.5; }
+  .tag {
+    display: inline-block;
+    font-family: var(--f-titulo);
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1;
+    color: #fff;
+    padding: 3px 7px;
+    margin-right: 4px;
+    vertical-align: 1px;
+  }
+  .tag--verde { background: var(--verde); }
+  .tag--cobre { background: var(--cobre); }
+  .tag--gris { background: #7c847f; }
+  @media (max-width: 560px) {
+    .changelog li { grid-template-columns: 1fr; }
+  }
+
+  .separa { height: 48px; }
+
+  .cifra {
+    display: grid;
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+    gap: 24px;
+    align-items: center;
+  }
+  .numero {
+    display: block;
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    color: var(--verde);
+    font-size: clamp(6rem, 20vw, 9.5rem);
+    line-height: 0.85;
+  }
+  .cifra-grande p {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    margin: 10px 0 0;
+  }
+  .barras {
+    background: var(--verde-palido);
+    padding: 22px 20px;
+    display: grid;
+    gap: 18px;
+  }
+  .barra {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+  }
+  .barra p { margin: 0; font-size: 0.95rem; line-height: 1.3; }
+  .barra small { display: block; font-size: 0.75rem; color: var(--gris); }
+  .pista {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .relleno {
+    display: block;
+    height: 32px;
+    width: calc(var(--v) * 0.78);
+  }
+  .relleno--verde { background: var(--verde); }
+  .relleno--cobre { background: var(--cobre); }
+  .pista b {
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    font-size: 1.9rem;
+    color: var(--verde);
+    white-space: nowrap;
+  }
+  .pista b.cobre { color: var(--cobre); }
+  .lectura { margin-top: 22px; }
+  @media (max-width: 767px) {
+    .cifra { grid-template-columns: 1fr; }
+    .barra { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>

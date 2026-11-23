@@ -1,0 +1,54 @@
+---
+// Barra lateral "rollo de película" del PDF. Solo en pantallas anchas.
+---
+<aside class="rollo" aria-hidden="true">
+  <div class="cuadros"></div>
+  <span class="texto">Segunda Vida Digital · Edición N.º 01</span>
+</aside>
+
+<style>
+  .rollo {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--rollo);
+    background: var(--verde);
+    z-index: 20;
+    overflow: hidden;
+  }
+  .cuadros {
+    position: absolute;
+    left: 16px;
+    top: 0;
+    bottom: 0;
+    width: 36px;
+    /* Cada cuadro: 36x32 con degradado cobre; separación de 14px. */
+    background-image: linear-gradient(135deg, #c8894b 0%, #e0ac70 55%, #b87a40 100%);
+    background-size: 36px 46px;
+    background-position: 0 12px;
+    -webkit-mask-repeat: repeat-y;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0 32px, transparent 32px 46px);
+    -webkit-mask-size: 36px 46px;
+    -webkit-mask-position: 0 12px;
+    mask-image: linear-gradient(to bottom, #000 0 32px, transparent 32px 46px);
+    mask-size: 36px 46px;
+    mask-position: 0 12px;
+    mask-repeat: repeat-y;
+  }
+  .texto {
+    position: absolute;
+    left: 2px;
+    bottom: 24px;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.18em;
+    color: #fff;
+    background: var(--verde);
+    padding: 8px 0;
+  }
+  @media (max-width: 1023px) {
+    .rollo { display: none; }
+  }
+</style>

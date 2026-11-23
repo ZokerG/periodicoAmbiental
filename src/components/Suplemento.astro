@@ -1,0 +1,170 @@
+---
+import CabeceraSeccion from './CabeceraSeccion.astro';
+import QR from './QR.astro';
+const pasos = ['Recibir', 'Diagnosticar', 'Reacondicionar', 'Entregar', 'Medir y publicar'];
+---
+<section id="suplemento" class="seccion">
+  <div class="contenedor">
+    <CabeceraSeccion ficha="S1" titulo="Noticia de impacto" ante="Proyecto en una página" />
+
+    <div class="encabezado">
+      <div>
+        <h3 class="titulo">Segunda Vida: reacondicionar los PC que Windows jubiló</h3>
+        <p class="bajada">
+          Una propuesta de estudiantes de Ingeniería de Software de la USCO para que los equipos que no pasan a Windows 11
+          lleguen a colegios públicos de Neiva y no a la basura.
+        </p>
+      </div>
+      <QR tamano={112} />
+    </div>
+
+    <dl class="ficha-proyecto">
+      <div>
+        <dt>Nombre del proyecto</dt>
+        <dd><strong>Segunda Vida:</strong> reacondicionamiento de computadores jubilados por Windows 11 para colegios públicos de Neiva.</dd>
+      </div>
+      <div>
+        <dt>Problema</dt>
+        <dd>
+          Computadores que funcionan se convierten en RAEE por una decisión de software.
+          <strong>(1)</strong> Hasta 400 millones de PC funcionales no podían pasar a Windows 11 (PIRG, 2025).
+          <strong>(2)</strong> Entre 3,5 y 4 millones de equipos corporativos en Colombia quedaron sin compatibilidad (El
+          Tiempo / HP, 2025). <strong>(3)</strong> Neiva genera 133 t de RAEE al año (Valderrama et al., 2018), y la mayor
+          campaña recoge 50 t (CAM, 2023).
+        </dd>
+      </div>
+      <div>
+        <dt>Decisión técnica</dt>
+        <dd>
+          Cambiar el sistema operativo sin soporte por una distribución Linux LTS ligera (5 años de parches de seguridad),
+          elegida según el hardware de cada equipo, y migrar a SSD cuando el disco es mecánico. La decisión de qué
+          software instalar, y con qué requisitos, es lo que convierte un residuo en un equipo útil.
+        </dd>
+      </div>
+      <div>
+        <dt>Usuario</dt>
+        <dd>
+          <strong>Técnicos:</strong> estudiantes de Ingeniería de Software en una jornada semestral en la USCO, con
+          celular o portátil. <strong>Receptores:</strong> colegios públicos de Neiva con salas de 5 a 10 años de
+          antigüedad, internet limitado o intermitente y sin personal de TI. Por eso la herramienta corre en el navegador,
+          sin instalar nada.
+        </dd>
+      </div>
+      <div>
+        <dt>Solución y prototipo</dt>
+        <dd>
+          <strong>Qué construimos:</strong> la herramienta web «¿Mi PC tiene segunda vida?». <strong>Qué funciona en la
+          demostración:</strong> revisa si el equipo cumple los requisitos de Windows 11 y explica por qué no; recomienda
+          la distribución Linux y la mejora (SSD o RAM); estima los kg de RAEE y CO₂ evitados; registra cada equipo de la
+          jornada y calcula el porcentaje de recuperación. <strong>Qué falta:</strong> imagen de instalación
+          preconfigurada con software educativo, base de datos compartida entre técnicos, seguimiento a 6 meses en los
+          colegios y acuerdos formales con la CAM y la Secretaría de Educación.
+        </dd>
+      </div>
+      <div>
+        <dt>Métrica</dt>
+        <dd>
+          <strong>Indicador 1:</strong> equipos recuperados / recibidos. Línea base: 0 % (hoy todos van a recolección).
+          Meta: ≥ 60 %. <strong>Indicador 2:</strong> equipos en uso a los 6 meses. Línea base: 0. Meta: ≥ 80 % de los
+          entregados. <strong>Indicador 3:</strong> kg de RAEE evitados. Línea base: 0. Meta primer semestre: 300 kg.
+          Registro público semestral.
+        </dd>
+      </div>
+      <div>
+        <dt>Riesgo principal</dt>
+        <dd>
+          Que los colegios no adopten Linux por desconocimiento y los equipos terminen sin uso. <strong>Qué
+          haríamos:</strong> escritorio parecido a Windows (Linux Mint), taller de 2 horas para docentes, guía impresa y
+          soporte por WhatsApp el primer mes. Si a los 12 meses no se cumplen las metas, el proyecto se ajusta o se
+          cierra.
+        </dd>
+      </div>
+    </dl>
+
+    <ol class="flujo">
+      {pasos.map((p, i) => <li>{i + 1} {p}</li>)}
+    </ol>
+
+    <p class="pie-fuente">
+      <strong>Aliados:</strong> Facultad de Ingeniería USCO, CAM (Opitatón), EcoCómputo, Secretaría de Educación de Neiva.
+      <strong>Demostración del prototipo:</strong> pruebe la herramienta
+      <a href="#herramienta">«¿Mi PC tiene segunda vida?»</a> aquí abajo.
+    </p>
+  </div>
+</section>
+
+<style>
+  .encabezado {
+    display: flex;
+    gap: 24px;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 22px;
+  }
+  .titulo {
+    font-size: clamp(2rem, 5.4vw, 3rem);
+    color: var(--tinta);
+    line-height: 0.98;
+    max-width: 20ch;
+  }
+  .bajada {
+    font-style: italic;
+    color: var(--gris);
+    font-size: 1.15rem;
+    margin: 10px 0 0;
+    max-width: 52ch;
+  }
+  @media (max-width: 600px) {
+    .encabezado { flex-direction: column; }
+  }
+
+  .ficha-proyecto { margin: 0; }
+  .ficha-proyecto > div {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    border-bottom: 1px solid var(--linea);
+  }
+  dt {
+    background: var(--verde);
+    color: #fff;
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    font-size: 1.45rem;
+    line-height: 1;
+    padding: 12px;
+    border-bottom: 1px solid rgb(255 255 255 / 0.18);
+  }
+  dd {
+    margin: 0;
+    padding: 12px 14px;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+  @media (max-width: 640px) {
+    .ficha-proyecto > div { grid-template-columns: 1fr; }
+    dt { padding: 9px 12px; }
+  }
+
+  .flujo {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3px;
+  }
+  .flujo li {
+    background: var(--verde);
+    color: #fff;
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 10px 6px;
+  }
+  .flujo li:last-child { background: var(--cobre); }
+  @media (max-width: 640px) {
+    .flujo { grid-template-columns: repeat(2, 1fr); }
+    .flujo li:last-child { grid-column: 1 / -1; }
+  }
+</style>

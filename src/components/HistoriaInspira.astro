@@ -1,0 +1,89 @@
+---
+import CabeceraSeccion from './CabeceraSeccion.astro';
+---
+<section id="historia" class="seccion">
+  <div class="contenedor">
+    <CabeceraSeccion ficha="J7" titulo="Historia que inspira" ante="Un caso real" />
+    <article class="bloque">
+      <div class="texto">
+        <p class="etiqueta-cobre">Cuando el código corrige al código</p>
+        <h3>Los Chromebooks que dejaron de «vencerse»</h3>
+        <p>
+          Hasta 2023, los Chromebooks traían una fecha de caducidad: pasados unos años dejaban de recibir
+          actualizaciones, aunque siguieran funcionando perfectamente. Para colegios y familias eso significaba
+          reemplazar computadores sanos. El grupo PIRG documentó el problema en su informe <em>Chromebook Churn</em> y
+          calculó el costo para las escuelas y el ambiente.
+        </p>
+        <p>
+          En septiembre de 2023 Google respondió: anunció 10 años de actualizaciones automáticas para los Chromebooks
+          lanzados desde 2021, y permitió que los modelos anteriores también se acogieran a la ampliación. Fue una
+          decisión de software, no de hardware: los mismos equipos ganaron años de vida útil sin cambiar una sola pieza.
+        </p>
+        <p>
+          La lección para nuestra carrera: la vida de un dispositivo se puede alargar con una política de soporte. Lo que
+          una empresa decide en su código también se puede corregir en su código.
+        </p>
+      </div>
+      <div class="diez" aria-label="10 años de actualizaciones">
+        <span>10</span>
+        <small>años de actualizaciones</small>
+      </div>
+      <p class="pie">
+        Fuentes: Google, anuncio de 10 años de actualizaciones para Chromebooks (sep. 2023); PIRG Education Fund,
+        «Chromebook Churn» (2023).
+      </p>
+    </article>
+  </div>
+</section>
+
+<style>
+  .bloque {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 8px 28px;
+    background: var(--verde);
+    color: #fff;
+    padding: 28px 26px 22px;
+  }
+  .etiqueta-cobre { color: var(--cobre-claro); margin: 0 0 6px; }
+  h3 {
+    color: #fff;
+    font-size: clamp(2.1rem, 5vw, 2.9rem);
+    line-height: 0.96;
+    margin-bottom: 16px;
+  }
+  .texto p:not(.etiqueta-cobre) { font-weight: 700; font-size: 1rem; }
+  .diez {
+    align-self: center;
+    text-align: center;
+  }
+  .diez span {
+    display: block;
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    font-size: 8.5rem;
+    line-height: 0.85;
+    color: var(--cobre-claro);
+  }
+  .diez small {
+    display: block;
+    font-family: var(--f-detalle);
+    font-size: 1rem;
+    line-height: 1.35;
+    max-width: 12ch;
+    margin: 6px auto 0;
+  }
+  .pie {
+    grid-column: 1 / -1;
+    font-style: italic;
+    font-size: 0.78rem;
+    color: #c9d5cd;
+    margin: 0;
+  }
+  @media (max-width: 700px) {
+    .bloque { grid-template-columns: 1fr; padding: 22px 18px; }
+    .diez { order: -1; display: flex; align-items: center; gap: 14px; text-align: left; }
+    .diez span { font-size: 5.5rem; }
+    .diez small { margin: 0; }
+  }
+</style>

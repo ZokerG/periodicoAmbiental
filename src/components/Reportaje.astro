@@ -1,0 +1,148 @@
+---
+import CabeceraSeccion from './CabeceraSeccion.astro';
+const datos = [
+  { n: 1, cifra: '40,5 %', texto: 'de los PC con Windows seguían en Windows 10 a días del fin del soporte.', fuente: 'The Register / StatCounter (2 oct. 2025)' },
+  { n: 2, cifra: '3,5–4 M', texto: 'de equipos corporativos en Colombia quedaron sin compatibilidad.', fuente: 'El Tiempo, con datos de HP (14 oct. 2025)' },
+  { n: 3, cifra: '22,3 %', texto: 'de los 62 millones de toneladas de basura electrónica de 2022 se recicló formalmente.', fuente: 'UNITAR/UIT, Global E-waste Monitor 2024' },
+];
+---
+<section id="reportaje" class="seccion">
+  <div class="contenedor">
+    <CabeceraSeccion ficha="J2" titulo="Reportaje central" ante="Tema 8 del curso" />
+
+    <h3 class="titulo">El computador no se dañó: lo jubiló una lista</h3>
+    <p class="sub">La obsolescencia ya no necesita romper una pieza: le basta con cambiar un requisito.</p>
+
+    <div class="dos-col cuerpo">
+      <p class="capitular">
+        El 14 de octubre de 2025 Microsoft dejó de publicar actualizaciones gratuitas para Windows 10. Al día siguiente,
+        millones de computadores encendieron y funcionaron igual que la víspera. Nada se rompió. Lo que cambió fue una
+        lista: Windows 11 exige un chip TPM 2.0, arranque seguro y un procesador que aparezca en un catálogo cerrado
+        (Intel de octava generación o AMD Zen+ en adelante). El equipo que no está en la lista se queda sin parches de
+        seguridad gratuitos.
+      </p>
+      <p>
+        A eso se le llama obsolescencia por software: el hardware sigue funcionando, pero una decisión de requisitos, de
+        soporte o de negocio lo deja sin uso. Según datos de StatCounter publicados por The Register, el
+        <strong>40,5 % de los PC con Windows seguía en Windows 10</strong> a pocos días del cierre del soporte. El grupo
+        de consumidores PIRG estimó que hasta 400 millones de equipos funcionales no podían dar el salto, y en Colombia HP
+        calculó para El Tiempo que <strong>entre 3,5 y 4 millones de computadores corporativos</strong> quedaban sin
+        compatibilidad.
+      </p>
+      <p>
+        No es un caso aislado. iOS 26 dejó por fuera al iPhone XS y al XR, lanzados en 2018. El Car Thing de Spotify se
+        desactivó en diciembre de 2024, dos años después de venderse. Y Apple pagó multas de 25 millones de euros en
+        Francia y 10 millones en Italia por ralentizar iPhones con baterías desgastadas sin avisar a sus usuarios.
+      </p>
+      <blockquote class="cita">
+        <p>«El derecho de los consumidores a reparar sus productos será ahora una realidad.»</p>
+        <footer>
+          René Repasi, ponente de la Directiva sobre el derecho a reparar, Parlamento Europeo (23 abr. 2024). Traducción
+          propia.
+        </footer>
+      </blockquote>
+      <p>
+        El costo termina en la basura. El Global E-waste Monitor 2024 de UNITAR y la UIT contó
+        <strong>62 millones de toneladas de residuos electrónicos en 2022</strong>, de las cuales solo el 22,3 % se
+        recolectó y recicló formalmente; para 2030 proyecta 82 millones. Y la mayor parte del daño ocurre antes de usar el
+        aparato: según el reporte ambiental de Apple, cerca del 80 % de la huella de carbono de un iPhone 16 se genera al
+        fabricarlo. Reemplazar antes de tiempo repite ese costo.
+      </p>
+      <p>
+        Europa decidió actuar. Desde el 20 de junio de 2025, el Reglamento (UE) 2023/1670 obliga a ofrecer al menos cinco
+        años de actualizaciones del sistema operativo en celulares y tabletas después de dejar de venderlos. En abril de
+        2024 el Parlamento Europeo aprobó la Directiva 2024/1799 sobre el derecho a reparar con 584 votos a favor y solo 3
+        en contra; los países deben aplicarla desde el 31 de julio de 2026.
+      </p>
+      <p>
+        Colombia, en cambio, gestiona el residuo pero no evita que se produzca. La Ley 1672 de 2013 obliga a recoger los
+        aparatos al final de su vida útil, pero el proyecto de ley contra la obsolescencia programada se archivó en 2026.
+        En Neiva, el único estudio local estimó 133 toneladas de RAEE al año, mientras que la mayor campaña de
+        recolección, la Opitatón de la CAM, recogió 50 toneladas en la ciudad en 2023.
+      </p>
+      <p>
+        Para quienes estudiamos Ingeniería de Software, la conclusión es incómoda: cada requisito mínimo es una decisión
+        de diseño, no una ley de la física. Con cada versión que publicamos decidimos cuántos equipos siguen sirviendo.
+      </p>
+    </div>
+
+    <div class="datos">
+      {datos.map(d => (
+        <div class="dato">
+          <p class="etiqueta-cobre">Dato verificable {d.n}</p>
+          <p class="dato-cifra">{d.cifra}</p>
+          <p class="dato-texto">{d.texto}</p>
+          <p class="pie-fuente">{d.fuente}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .titulo {
+    font-size: clamp(2rem, 5.4vw, 3rem);
+    color: var(--tinta);
+    font-weight: 800;
+  }
+  .sub {
+    font-style: italic;
+    color: var(--gris);
+    font-size: 1.15rem;
+    margin: 8px 0 22px;
+  }
+  .capitular::first-letter {
+    float: left;
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    color: var(--cobre);
+    font-size: 4.6rem;
+    line-height: 0.8;
+    margin: 6px 8px 0 0;
+  }
+  .cita {
+    margin: 4px 0 18px;
+    background: var(--verde);
+    color: #fff;
+    padding: 20px 22px;
+    break-inside: avoid;
+  }
+  .cita p {
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    font-size: 1.9rem;
+    line-height: 1.02;
+    text-align: left;
+    margin-bottom: 12px;
+  }
+  .cita footer {
+    font-style: italic;
+    font-size: 0.8rem;
+    color: #d5e0d8;
+    text-align: left;
+  }
+
+  .datos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 4px solid var(--verde);
+    margin-top: 32px;
+  }
+  .dato { padding: 16px 16px 4px; }
+  .dato + .dato { border-left: 1px solid var(--linea); }
+  .dato .etiqueta-cobre { margin: 0; }
+  .dato-cifra {
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    font-size: 3.6rem;
+    line-height: 0.9;
+    color: var(--cobre);
+    margin: 2px 0 10px;
+  }
+  .dato-texto { margin: 0; font-size: 1rem; line-height: 1.45; }
+  .dato .pie-fuente { margin-top: 8px; }
+  @media (max-width: 767px) {
+    .datos { grid-template-columns: 1fr; }
+    .dato + .dato { border-left: 0; border-top: 1px solid var(--linea); }
+  }
+</style>

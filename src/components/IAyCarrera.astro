@@ -1,0 +1,92 @@
+---
+import CabeceraSeccion from './CabeceraSeccion.astro';
+---
+<section id="ia" class="seccion">
+  <div class="contenedor">
+    <CabeceraSeccion ficha="J3" titulo="IA y mi carrera" ante="Ingeniería de Software" />
+    <h3 class="titulo">La IA puede alargar la vida de un equipo… o acortarla</h3>
+
+    <div class="columnas">
+      <div class="col">
+        <h4>Usos reales de la IA en la profesión</h4>
+        <p>
+          En Ingeniería de Software la inteligencia artificial ya hace parte del trabajo diario. Los asistentes de
+          programación sugieren y revisan código, generan pruebas automatizadas y documentan APIs. En operación y
+          soporte, los modelos de lenguaje ayudan a leer registros (logs) para encontrar la causa de una falla, y pueden
+          guiar a un técnico paso a paso para saber si el problema de un equipo está en el disco, en la memoria o en el
+          sistema operativo.
+        </p>
+      </div>
+      <div class="col">
+        <h4>Propuesta práctica desde el software</h4>
+        <p>
+          Proponemos agregar un asistente de diagnóstico a la herramienta
+          <a href="#herramienta">«¿Mi PC tiene segunda vida?»</a>. A partir de las especificaciones del equipo y de los
+          síntomas que describe el usuario («está lento», «no arranca», «no pasa a Windows 11»), la IA sugeriría primero
+          la reparación más barata: cambiar el disco por un SSD, ampliar la memoria o instalar una distribución Linux con
+          soporte de largo plazo. El reciclaje sería la última opción, no la primera. Para no sumar huella ambiental, el
+          asistente usaría reglas simples por defecto y solo consultaría un modelo pequeño cuando las reglas no alcancen.
+        </p>
+      </div>
+      <div class="col col--cobre">
+        <h4>Riesgos ambientales y éticos</h4>
+        <ol>
+          <li>
+            <strong>La IA también acelera la obsolescencia.</strong> Microsoft exige una unidad de procesamiento neuronal
+            (NPU) de más de 40 billones de operaciones por segundo (TOPS) para los PC «Copilot+», un requisito que casi
+            ningún computador anterior a 2024 cumple.
+          </li>
+          <li>
+            <strong>Consumo de energía.</strong> La Agencia Internacional de Energía (Energy and AI, 2025) calcula que los
+            centros de datos consumieron cerca de 415 TWh en 2024 y que esa demanda podría duplicarse hacia 2030,
+            impulsada en buena parte por la IA.
+          </li>
+          <li>
+            <strong>Errores con apariencia de certeza.</strong> Un diagnóstico automático puede equivocarse con total
+            seguridad y llevar a desechar un equipo que sí se podía recuperar. La decisión final debe validarla una
+            persona.
+          </li>
+        </ol>
+      </div>
+    </div>
+    <p class="pie-fuente">Fuentes: Microsoft (2024), requisitos de los PC Copilot+; AIE, Energy and AI (2025).</p>
+  </div>
+</section>
+
+<style>
+  .titulo {
+    font-size: clamp(2rem, 5.4vw, 3rem);
+    color: var(--tinta);
+    margin-bottom: 26px;
+  }
+  .columnas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .col {
+    border-top: 8px solid var(--verde);
+    padding-top: 14px;
+    font-size: 1rem;
+  }
+  .col--cobre { border-top-color: var(--cobre); }
+  h4 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    line-height: 0.98;
+    margin-bottom: 12px;
+  }
+  ol {
+    margin: 0;
+    padding-left: 1.3em;
+  }
+  li { margin-bottom: 0.8em; }
+  li::marker {
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    color: var(--cobre);
+  }
+  @media (max-width: 860px) {
+    .columnas { grid-template-columns: 1fr; }
+  }
+</style>

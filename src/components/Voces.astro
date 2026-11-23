@@ -1,0 +1,102 @@
+---
+import CabeceraSeccion from './CabeceraSeccion.astro';
+const voces = [
+  {
+    cita: '«El equipo llega "muerto" y sale más rápido que antes»',
+    nombre: 'Arley Cuéllar',
+    rol: 'Técnico de computadores con 20 años en un local del centro de Neiva',
+    qa: [
+      ['¿Qué es lo que más le llega al taller desde octubre?', 'Portátiles de 2016 a 2018 que la gente cree que «ya no sirven» porque Windows les dice que no pueden actualizar. Les cambio el disco por uno sólido, les dejo Linux Mint y quedan más rápidos que uno nuevo de gama baja.'],
+      ['¿Qué le impide reparar más?', 'Los repuestos. Una batería o una pantalla original a veces cuesta casi lo que vale el equipo, y hay marcas que bloquean piezas por software si no las cambia un servicio autorizado.'],
+    ],
+  },
+  {
+    cita: '«Si llegan funcionando, los recibimos hoy mismo»',
+    nombre: 'Marcela Trujillo',
+    rol: 'Rectora de un colegio público de la comuna 10 de Neiva',
+    qa: [
+      ['¿Cómo está la sala de sistemas?', 'Tenemos 25 computadores y 9 no pueden pasar a Windows 11. Funcionan, pero no sabemos cuánto tiempo serán seguros.'],
+      ['¿Recibirían equipos con Linux?', 'Sí, siempre que lleguen funcionando y alguien capacite a los docentes. Lo que no podemos es recibir equipos que se dañan al mes y quedan arrumados.'],
+    ],
+  },
+  {
+    cita: '«Preferimos que se reparen antes de llegar a nosotros»',
+    nombre: 'Andrés Polanía',
+    rol: 'Gestor ambiental en una jornada de recolección de RAEE en el Huila',
+    qa: [
+      ['¿Qué es lo que más recogen?', 'Monitores, torres y portátiles que todavía encienden. Muchos salen de oficinas que renovaron por el cambio de sistema operativo.'],
+      ['¿Qué mensaje le daría a la gente?', 'Que reciclar bien es importante, pero reparar es mejor. Cada equipo que se repara es un residuo peligroso que no tenemos que procesar.'],
+    ],
+  },
+];
+---
+<section id="voces" class="seccion">
+  <div class="contenedor">
+    <CabeceraSeccion ficha="J4" titulo="Voces del territorio" ante="Neiva, Huila" />
+    <p class="aviso">Entrevistas ficticias, construidas a partir del contexto real de Neiva. Los nombres son inventados.</p>
+
+    {voces.map(v => (
+      <article class="voz">
+        <div class="quien">
+          <p class="cita">{v.cita}</p>
+          <p class="nombre">{v.nombre}</p>
+          <p class="rol">{v.rol} <span class="ficticio">(personaje ficticio)</span></p>
+        </div>
+        <div class="qa">
+          {v.qa.map(([q, a]) => (
+            <>
+              <p class="q">{q}</p>
+              <p class="a">{a}</p>
+            </>
+          ))}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .aviso {
+    font-style: italic;
+    color: var(--gris);
+    font-size: 0.92rem;
+  }
+  .voz {
+    display: grid;
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+    gap: 24px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--linea);
+  }
+  .cita {
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    color: var(--verde);
+    font-size: clamp(2rem, 4.6vw, 2.6rem);
+    line-height: 0.98;
+    margin-bottom: 18px;
+  }
+  .nombre {
+    font-family: var(--f-titulo);
+    font-weight: 700;
+    color: var(--cobre);
+    font-size: 1.35rem;
+    margin: 0 0 2px;
+  }
+  .rol {
+    font-size: 0.88rem;
+    color: var(--gris);
+    line-height: 1.45;
+    margin: 0;
+  }
+  .ficticio { white-space: nowrap; }
+  .q {
+    font-weight: 700;
+    color: var(--verde);
+    margin: 0 0 6px;
+  }
+  .a { margin: 0 0 16px; }
+  @media (max-width: 767px) {
+    .voz { grid-template-columns: 1fr; gap: 12px; }
+  }
+</style>

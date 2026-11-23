@@ -1,0 +1,571 @@
+---
+import CabeceraSeccion from './CabeceraSeccion.astro';
+const rams = [1, 2, 3, 4, 6, 8, 12, 16];
+---
+<section id="herramienta" class="seccion herramienta">
+  <div class="contenedor">
+    <CabeceraSeccion ficha="S2" titulo="¿Mi PC tiene segunda vida?" ante="Herramienta interactiva" />
+    <p class="intro">
+      Responda unas preguntas sobre el computador y le decimos si puede pasar a Windows 11, qué sistema le conviene si no,
+      y cuánto residuo se evita al no botarlo. Funciona en el navegador, sin instalar nada.
+    </p>
+
+    <form class="form" data-form novalidate>
+      <fieldset>
+        <legend>Tipo de equipo</legend>
+        <div class="chips">
+          <label><input type="radio" name="tipo" value="portatil" required checked /><span>Portátil</span></label>
+          <label><input type="radio" name="tipo" value="torre" /><span>Torre de escritorio</span></label>
+          <label><input type="radio" name="tipo" value="todoenuno" /><span>Todo en uno</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Procesador</legend>
+        <div class="chips">
+          <label><input type="radio" name="procesador" value="intel" required checked /><span>Intel</span></label>
+          <label><input type="radio" name="procesador" value="amd" /><span>AMD</span></label>
+          <label><input type="radio" name="procesador" value="otro" /><span>Otro / no sé</span></label>
+        </div>
+        <div class="sub" data-solo="intel">
+          <label class="campo">
+            <span>Generación Intel</span>
+            <select name="genIntel">
+              <option value="pre8">1.ª a 7.ª generación</option>
+              <option value="8plus">8.ª generación o superior</option>
+            </select>
+          </label>
+          <p class="ayuda">Aparece en el nombre: un «Core i5-<b>7</b>200U» es de 7.ª; un «i5-<b>10</b>210U» es de 10.ª.</p>
+        </div>
+        <div class="sub" data-solo="amd" hidden>
+          <label class="campo">
+            <span>Familia AMD</span>
+            <select name="familiaAmd">
+              <option value="preryzen">Anterior a Ryzen (FX, A-series)</option>
+              <option value="ryzen1000">Ryzen 1000</option>
+              <option value="ryzen2000plus">Ryzen 2000 o posterior</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Memoria y disco</legend>
+        <div class="fila">
+          <label class="campo">
+            <span>Memoria RAM</span>
+            <select name="ramGB">
+              {rams.map(r => <option value={r} selected={r === 8}>{r === 16 ? '16 GB o más' : `${r} GB`}</option>)}
+            </select>
+          </label>
+          <label class="campo">
+            <span>Capacidad del disco (GB)</span>
+            <input type="number" name="discoGB" min="1" max="20000" step="1" value="256" inputmode="numeric" required />
+          </label>
+        </div>
+        <div class="chips">
+          <label><input type="radio" name="disco" value="hdd" required checked /><span>HDD (mecánico)</span></label>
+          <label><input type="radio" name="disco" value="ssd" /><span>SSD</span></label>
+        </div>
+        <button type="button" class="detectar" data-detectar hidden>Detectar este equipo</button>
+        <p class="ayuda" data-detectado hidden></p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Seguridad</legend>
+        <p class="ayuda">Se ve en Windows con <b>tpm.msc</b> (TPM) y <b>msinfo32</b> (Estado de arranque seguro).</p>
+        <div class="fila">
+          <div>
+            <p class="mini">TPM 2.0</p>
+            <div class="chips">
+              <label><input type="radio" name="tpm" value="si" required /><span>Sí</span></label>
+              <label><input type="radio" name="tpm" value="no" /><span>No</span></label>
+              <label><input type="radio" name="tpm" value="nose" checked /><span>No sé</span></label>
+            </div>
+          </div>
+          <div>
+            <p class="mini">Arranque seguro / UEFI</p>
+            <div class="chips">
+              <label><input type="radio" name="arranqueSeguro" value="si" required /><span>Sí</span></label>
+              <label><input type="radio" name="arranqueSeguro" value="no" /><span>No</span></label>
+              <label><input type="radio" name="arranqueSeguro" value="nose" checked /><span>No sé</span></label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <p class="error" data-error role="alert" hidden></p>
+      <button type="submit" class="boton boton--grande">Diagnosticar</button>
+    </form>
+
+    <div class="resultado" data-resultado aria-live="polite" hidden>
+      <div class="veredicto" data-veredicto>
+        <p class="v-etiqueta">Veredicto</p>
+        <h3 data-v-titulo></h3>
+        <p class="v-rec" data-v-rec></p>
+        <p class="v-ssd" data-v-ssd hidden>
+          <b>+ Mejora:</b> cambiar a un SSD de 240–256 GB: es la mejora más barata y la que más se nota.
+        </p>
+      </div>
+      <div class="motivos" data-motivos hidden>
+        <h4>¿Por qué no pasa a Windows 11?</h4>
+        <ul data-motivos-lista></ul>
+      </div>
+      <div class="impacto" data-impacto hidden>
+        <p class="estimacion">Estimación orientativa</p>
+        <div class="impacto-cifras">
+          <p><span data-kg></span><small>kg de RAEE evitados</small></p>
+          <p><span data-co2></span><small>kg CO₂e de fabricación evitada</small></p>
+        </div>
+        <p class="ayuda">
+          Cerca del 80 % de la huella de un dispositivo se genera al fabricarlo (Apple, Product Environmental Report
+          iPhone 16, 2024). Alargar su vida evita fabricar uno nuevo.
+        </p>
+      </div>
+      <button type="button" class="boton boton--cobre" data-registrar>Registrar en la jornada</button>
+      <p class="ok" data-ok hidden>✓ Registrado en la jornada.</p>
+    </div>
+
+    <div class="jornada">
+      <h3 class="j-titulo">Modo jornada</h3>
+      <p class="ayuda">Para la jornada de reacondicionamiento: cada equipo diagnosticado se puede registrar aquí.</p>
+      <div class="kpis">
+        <div class="kpi"><span data-k="recibidos">0</span><small>Equipos recibidos</small></div>
+        <div class="kpi"><span data-k="recuperados">0</span><small>Equipos recuperados</small></div>
+        <div class="kpi kpi--meta">
+          <span data-k="porcentaje">0 %</span><small>Recuperación (meta 60 %)</small>
+          <div class="meta-barra"><i data-k-barra></i><b title="Meta 60 %"></b></div>
+        </div>
+        <div class="kpi"><span data-k="kg">0</span><small>kg de RAEE evitados</small></div>
+      </div>
+      <div class="tabla-envoltura">
+        <table class="tabla">
+          <thead>
+            <tr><th>N.º</th><th>Tipo</th><th>Procesador</th><th>RAM</th><th>Veredicto</th><th>kg evitados</th></tr>
+          </thead>
+          <tbody data-tabla>
+            <tr class="vacia"><td colspan="6">Todavía no hay equipos registrados.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="acciones">
+        <button type="button" class="boton" data-csv>Exportar CSV</button>
+        <button type="button" class="boton boton--borde" data-borrar>Borrar jornada</button>
+      </div>
+      <p class="aviso" data-aviso-storage hidden>
+        No se pudo guardar en este navegador; los datos se pierden al recargar.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { diagnosticar, type Equipo } from '../lib/diagnostico';
+  import {
+    aCSV, cargar, crearRegistro, guardar, indicadores,
+    ETIQUETA_TIPO, ETIQUETA_VEREDICTO, type Registro,
+  } from '../lib/jornada';
+
+  const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
+  const form = $<HTMLFormElement>('[data-form]');
+  const resultado = $('[data-resultado]');
+  const avisoStorage = $('[data-aviso-storage]');
+  const fmt = (n: number) => n.toLocaleString('es-CO', { maximumFractionDigits: 1 });
+
+  let registros: Registro[] = cargar();
+  let ultimo: { e: Equipo; d: ReturnType<typeof diagnosticar> } | null = null;
+
+  // --- Campos según procesador ---
+  function actualizarCampos() {
+    const p = (form.elements.namedItem('procesador') as RadioNodeList).value;
+    form.querySelectorAll<HTMLElement>('[data-solo]').forEach(el => {
+      el.hidden = el.dataset.solo !== p;
+    });
+  }
+  form.addEventListener('change', e => {
+    if ((e.target as HTMLInputElement).name === 'procesador') actualizarCampos();
+  });
+  actualizarCampos();
+
+  // --- Detectar este equipo (aproximado) ---
+  const nav = navigator as Navigator & { deviceMemory?: number };
+  const btnDetectar = $<HTMLButtonElement>('[data-detectar]');
+  if (typeof nav.deviceMemory === 'number') {
+    btnDetectar.hidden = false;
+    btnDetectar.addEventListener('click', () => {
+      const mem = nav.deviceMemory!;
+      const sel = form.elements.namedItem('ramGB') as HTMLSelectElement;
+      const opciones = [...sel.options].map(o => Number(o.value));
+      const valor = opciones.filter(v => v <= mem).pop() ?? opciones[0];
+      sel.value = String(valor);
+      const info = $('[data-detectado]');
+      info.hidden = false;
+      info.textContent = `Detectado: ~${mem} GB de RAM, ${navigator.hardwareConcurrency || '?'} núcleos (aproximado; el navegador limita el dato a 8 GB).`;
+    });
+  }
+
+  // --- Leer formulario (solo campos visibles) ---
+  function leerEquipo(): Equipo | string {
+    const f = new FormData(form);
+    const get = (k: string) => String(f.get(k) ?? '');
+    const procesador = get('procesador') as Equipo['procesador'];
+    const discoGB = Number(get('discoGB'));
+    if (!Number.isFinite(discoGB) || discoGB <= 0) return 'Escriba la capacidad del disco en GB (por ejemplo, 256).';
+    if (!get('tpm') || !get('arranqueSeguro')) return 'Indique si tiene TPM 2.0 y arranque seguro (o marque «No sé»).';
+    const e: Equipo = {
+      tipo: get('tipo') as Equipo['tipo'],
+      procesador,
+      ramGB: Number(get('ramGB')),
+      disco: get('disco') as Equipo['disco'],
+      discoGB,
+      tpm: get('tpm') as Equipo['tpm'],
+      arranqueSeguro: get('arranqueSeguro') as Equipo['arranqueSeguro'],
+    };
+    if (procesador === 'intel') e.genIntel = get('genIntel') as Equipo['genIntel'];
+    if (procesador === 'amd') e.familiaAmd = get('familiaAmd') as Equipo['familiaAmd'];
+    return e;
+  }
+
+  // --- Mostrar resultado ---
+  form.addEventListener('submit', ev => {
+    ev.preventDefault();
+    const error = $('[data-error]');
+    const e = leerEquipo();
+    if (typeof e === 'string') {
+      error.textContent = e;
+      error.hidden = false;
+      return;
+    }
+    error.hidden = true;
+    const d = diagnosticar(e);
+    ultimo = { e, d };
+
+    const caja = $('[data-veredicto]');
+    caja.dataset.tipo = d.veredicto;
+    $('[data-v-titulo]').textContent = d.titulo;
+    $('[data-v-rec]').textContent = d.recomendacion;
+    $('[data-v-ssd]').hidden = !d.mejoraSSD;
+
+    const motivos = $('[data-motivos]');
+    motivos.hidden = d.motivos.length === 0;
+    $('[data-motivos-lista]').replaceChildren(
+      ...d.motivos.map(m => Object.assign(document.createElement('li'), { textContent: m })),
+    );
+
+    const imp = $('[data-impacto]');
+    imp.hidden = !d.impacto;
+    if (d.impacto) {
+      $('[data-kg]').textContent = `≈ ${fmt(d.impacto.kgRaee)}`;
+      $('[data-co2]').textContent = `≈ ${fmt(d.impacto.kgCo2)}`;
+    }
+
+    $('[data-ok]').hidden = true;
+    $<HTMLButtonElement>('[data-registrar]').disabled = false;
+    resultado.hidden = false;
+    resultado.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
+  });
+
+  // --- Jornada ---
+  function persistir() {
+    avisoStorage.hidden = guardar(registros);
+  }
+
+  function pintarJornada() {
+    const k = indicadores(registros);
+    $('[data-k="recibidos"]').textContent = String(k.recibidos);
+    $('[data-k="recuperados"]').textContent = String(k.recuperados);
+    $('[data-k="porcentaje"]').textContent = `${k.porcentaje} %`;
+    $('[data-k="kg"]').textContent = fmt(k.kgEvitados);
+    const barra = $('[data-k-barra]');
+    barra.style.width = `${k.porcentaje}%`;
+    barra.classList.toggle('cumple', k.metaCumplida);
+
+    const tbody = $('[data-tabla]');
+    if (!registros.length) {
+      tbody.innerHTML = '<tr class="vacia"><td colspan="6">Todavía no hay equipos registrados.</td></tr>';
+      return;
+    }
+    tbody.replaceChildren(
+      ...registros.map(r => {
+        const tr = document.createElement('tr');
+        const celdas = [
+          String(r.n), ETIQUETA_TIPO[r.tipo] ?? r.tipo, r.procesador,
+          r.ramGB >= 16 ? '16+ GB' : `${r.ramGB} GB`, ETIQUETA_VEREDICTO[r.veredicto] ?? r.veredicto, fmt(r.kgRaee),
+        ];
+        celdas.forEach(c => tr.append(Object.assign(document.createElement('td'), { textContent: c })));
+        tr.dataset.v = r.veredicto;
+        return tr;
+      }),
+    );
+  }
+
+  $('[data-registrar]').addEventListener('click', ev => {
+    if (!ultimo) return;
+    const n = registros.reduce((m, r) => Math.max(m, r.n), 0) + 1;
+    registros = [...registros, crearRegistro(ultimo.e, ultimo.d, n)];
+    persistir();
+    pintarJornada();
+    (ev.currentTarget as HTMLButtonElement).disabled = true;
+    $('[data-ok]').hidden = false;
+  });
+
+  $('[data-csv]').addEventListener('click', () => {
+    const blob = new Blob([aCSV(registros)], { type: 'text/csv;charset=utf-8' });
+    const a = Object.assign(document.createElement('a'), {
+      href: URL.createObjectURL(blob),
+      download: 'jornada-segunda-vida.csv',
+    });
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+
+  $('[data-borrar]').addEventListener('click', () => {
+    if (!registros.length) return;
+    if (!confirm('¿Borrar todos los equipos registrados en esta jornada?')) return;
+    registros = [];
+    persistir();
+    pintarJornada();
+  });
+
+  pintarJornada();
+</script>
+
+<style>
+  .herramienta { background: linear-gradient(var(--verde-palido), var(--verde-palido)) no-repeat 0 0 / 100% 100%; }
+  .intro { max-width: 62ch; }
+
+  .form {
+    background: #fff;
+    border-top: 8px solid var(--verde);
+    padding: 8px 22px 24px;
+    box-shadow: 0 1px 0 var(--linea);
+  }
+  fieldset {
+    border: 0;
+    border-bottom: 1px solid var(--linea);
+    margin: 0;
+    padding: 16px 0 18px;
+    min-width: 0;
+  }
+  legend {
+    font-family: var(--f-titulo);
+    font-weight: 800;
+    font-size: 1.45rem;
+    color: var(--verde);
+    padding: 0;
+    float: left;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  legend + * { clear: left; }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chips label { cursor: pointer; }
+  .chips input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+  .chips span {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 2px solid var(--verde);
+    color: var(--verde);
+    font-size: 0.98rem;
+    line-height: 1.2;
+    background: #fff;
+    transition: background 0.12s, color 0.12s;
+  }
+  .chips label:hover span { background: var(--verde-palido); }
+  .chips input:checked + span { background: var(--verde); color: #fff; }
+  .chips input:focus-visible + span { outline: 3px solid var(--cobre); outline-offset: 2px; }
+
+  .sub { margin-top: 12px; }
+  .sub select { width: min(100%, 22rem); }
+  .fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+    margin-bottom: 12px;
+  }
+  .campo { display: grid; gap: 4px; }
+  .campo > span, .mini {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gris);
+    margin: 0 0 4px;
+  }
+  select, input[type='number'] {
+    font: inherit;
+    font-size: 1rem;
+    padding: 8px 10px;
+    border: 2px solid var(--verde);
+    border-radius: 0;
+    background: #fff;
+    color: var(--tinta);
+    min-width: 0;
+    max-width: 100%;
+  }
+  input[type='number'] { width: 9rem; }
+  .ayuda { font-size: 0.85rem; color: var(--gris); margin: 8px 0 0; }
+  .detectar {
+    margin-top: 12px;
+    font: inherit;
+    font-size: 0.9rem;
+    background: none;
+    border: 0;
+    color: var(--cobre);
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+  }
+  .error {
+    color: #9b2d20;
+    font-weight: 700;
+    margin: 14px 0 0;
+  }
+  .boton--grande { margin-top: 18px; font-size: 1.5rem; padding: 0.5em 1.4em; }
+
+  .resultado {
+    margin-top: 22px;
+    background: #fff;
+    padding: 0 0 22px;
+  }
+  .resultado > :not(.veredicto) { margin-left: 22px; margin-right: 22px; }
+  .veredicto {
+    background: var(--verde);
+    color: #fff;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+  .veredicto[data-tipo='reciclaje'] { background: var(--cobre); }
+  .v-etiqueta {
+    font-family: var(--f-titulo);
+    font-weight: 700;
+    color: var(--cobre-claro);
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  .veredicto[data-tipo='reciclaje'] .v-etiqueta { color: var(--verde); }
+  .veredicto h3 {
+    color: #fff;
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+    font-weight: 900;
+    margin: 2px 0 8px;
+  }
+  .v-rec { font-size: 1.2rem; margin: 0; }
+  .v-ssd { margin: 10px 0 0; }
+  .motivos h4 { font-size: 1.5rem; margin-bottom: 6px; }
+  .motivos ul { margin: 0 0 16px; padding-left: 1.2em; }
+  .motivos li::marker { color: var(--cobre); }
+  .impacto {
+    border: 2px dashed var(--cobre);
+    padding: 12px 16px 14px;
+    margin-bottom: 18px;
+  }
+  .estimacion {
+    display: inline-block;
+    font-family: var(--f-titulo);
+    font-weight: 700;
+    color: #fff;
+    background: var(--cobre);
+    padding: 2px 8px;
+    margin: 0 0 8px;
+  }
+  .impacto-cifras { display: flex; flex-wrap: wrap; gap: 10px 36px; }
+  .impacto-cifras p { margin: 0; }
+  .impacto-cifras span {
+    display: block;
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--verde);
+  }
+  .impacto-cifras small { font-size: 0.85rem; color: var(--gris); }
+  .ok { color: var(--verde); font-weight: 700; margin: 10px 0 0; }
+  [data-registrar]:disabled { opacity: 0.5; cursor: default; }
+
+  .jornada { margin-top: 36px; }
+  .j-titulo { font-size: 2rem; font-weight: 900; text-transform: uppercase; }
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .kpi {
+    background: #fff;
+    border-top: 5px solid var(--verde);
+    padding: 12px 14px;
+  }
+  .kpi--meta { border-top-color: var(--cobre); }
+  .kpi span {
+    display: block;
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--verde);
+  }
+  .kpi small { font-size: 0.82rem; color: var(--gris); }
+  .meta-barra {
+    position: relative;
+    height: 8px;
+    background: var(--verde-palido);
+    margin-top: 8px;
+  }
+  .meta-barra i {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    background: var(--cobre);
+    transition: width 0.3s;
+  }
+  .meta-barra i.cumple { background: var(--verde); }
+  .meta-barra b {
+    position: absolute;
+    left: 60%;
+    top: -4px;
+    bottom: -4px;
+    width: 2px;
+    background: var(--tinta);
+  }
+  @media (max-width: 760px) {
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .tabla-envoltura { overflow-x: auto; background: #fff; }
+  .tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    min-width: 560px;
+  }
+  .tabla th {
+    background: var(--verde);
+    color: #fff;
+    font-family: var(--f-titulo);
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-align: left;
+    padding: 8px 10px;
+  }
+  .tabla td { padding: 8px 10px; border-bottom: 1px solid var(--linea); }
+  .tabla :global(tr[data-v='reciclaje'] td:nth-child(5)) { color: var(--cobre); font-weight: 700; }
+  .tabla :global(.vacia td) { color: var(--gris); font-style: italic; text-align: center; padding: 18px; }
+  .acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .aviso { color: #9b2d20; font-size: 0.88rem; margin-top: 10px; }
+
+  @media (max-width: 640px) {
+    .form { padding: 4px 14px 20px; }
+    .resultado > :not(.veredicto) { margin-left: 14px; margin-right: 14px; }
+    .veredicto { padding: 18px 14px; }
+  }
+</style>

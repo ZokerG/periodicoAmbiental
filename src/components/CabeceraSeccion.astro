@@ -1,0 +1,50 @@
+---
+interface Props {
+  ficha?: string;
+  titulo: string;
+  ante?: string;
+}
+const { ficha, titulo, ante } = Astro.props;
+---
+<header class="cabecera">
+  {ficha && <span class="ficha">{ficha}</span>}
+  <h2>{titulo}</h2>
+  {ante && <span class="ante">{ante}</span>}
+</header>
+
+<style>
+  .cabecera {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    padding-bottom: 12px;
+    border-bottom: 4px solid var(--verde);
+    margin-bottom: 22px;
+  }
+  .ficha {
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    font-size: 2.1rem;
+    line-height: 1;
+    color: #fff;
+    background: var(--cobre);
+    padding: 8px 12px 6px;
+  }
+  h2 {
+    font-weight: 900;
+    font-size: clamp(2.2rem, 6.5vw, 3.6rem);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .ante {
+    margin-left: auto;
+    font-style: italic;
+    color: var(--gris);
+    font-size: 0.95rem;
+    align-self: flex-end;
+  }
+  @media (max-width: 560px) {
+    .ante { margin-left: 0; flex-basis: 100%; }
+  }
+</style>

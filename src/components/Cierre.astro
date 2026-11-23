@@ -1,0 +1,90 @@
+---
+import CabeceraSeccion from './CabeceraSeccion.astro';
+const creditos = [
+  ['Juan Felipe Andrade', '20212200010'],
+  ['Juan Camilo Barranco', '20212200558'],
+  ['Carlos Mauricio Quintero', '20212200385'],
+];
+---
+<section id="cierre" class="seccion">
+  <div class="contenedor">
+    <CabeceraSeccion ficha="J8" titulo="Cierre" ante="Lo que aprendimos" />
+    <ul class="aprendizajes">
+      <li>La obsolescencia no siempre es física: muchas veces es una decisión de requisitos, de soporte o de negocio que se toma en el software.</li>
+      <li>Europa ya la regula con años mínimos de actualizaciones y el derecho a reparar; Colombia gestiona el residuo, pero nada evita que se produzca.</li>
+      <li>El problema también es local: Neiva genera más RAEE de los que logra recoger su mayor campaña.</li>
+      <li>Como ingenieros de software, decidimos con cada versión cuántos equipos siguen sirviendo.</li>
+    </ul>
+    <p class="lema">Reparar antes que reemplazar empieza en el código.</p>
+
+    <div class="pie-grid">
+      <div>
+        <p class="etiqueta-cobre">Créditos</p>
+        <table class="creditos">
+          <tbody>
+            {creditos.map(([n, c]) => (
+              <tr><th scope="row">{n}</th><td>{c}</td></tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="pie-fuente">
+          Ingeniería de Software · Ecología · Universidad Surcolombiana · Neiva.<br />
+          Docente: Diego Alberto Bernal Lozano.
+        </p>
+      </div>
+      <aside class="ia">
+        <p class="etiqueta-cobre">Declaración de uso de IA</p>
+        <p>
+          Usamos <strong>Claude (Anthropic)</strong> para organizar la estructura del periódico, proponer borradores de
+          texto a partir de los datos de nuestra exposición, diseñar el PDF y programar esta web. Todas las cifras
+          provienen de las fuentes citadas y el grupo las revisó; las entrevistas de «Voces del territorio» son ficticias
+          y así se indica. Las columnas de opinión fueron revisadas y asumidas por sus firmantes.
+        </p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<style>
+  .aprendizajes {
+    margin: 0;
+    padding-left: 1.2em;
+  }
+  .aprendizajes li { margin-bottom: 0.55em; }
+  .aprendizajes li::marker { color: var(--cobre); font-size: 1.2em; }
+  .lema {
+    font-family: var(--f-titulo);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--verde);
+    font-size: clamp(2rem, 5.2vw, 3rem);
+    line-height: 0.98;
+    margin: 18px 0 26px;
+  }
+  .pie-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .creditos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+  }
+  .creditos th,
+  .creditos td {
+    text-align: left;
+    padding: 8px 6px;
+    border-bottom: 1px solid var(--linea);
+  }
+  .creditos td { font-variant-numeric: tabular-nums; }
+  .ia {
+    background: var(--verde-palido);
+    padding: 18px 18px 6px;
+    font-size: 0.95rem;
+  }
+  @media (max-width: 767px) {
+    .pie-grid { grid-template-columns: 1fr; }
+  }
+</style>
